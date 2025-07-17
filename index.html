@@ -97,6 +97,7 @@
       var form = document.getElementById("mainform");
       var selectedMode = document.querySelector('input[name="MODE"]:checked').value;
 
+      console.log(selectedMode)
       if (selectedMode === "TEST") {
         form.action = "https://test.ipg-online.com/connect/gateway/processing";
       } else if (selectedMode === "LIVE") {
@@ -106,10 +107,10 @@
   </script>
 </head>
 
-<body>
+<body onload="setFormAction()">
   <h2>Select the Type of Transaction</h2>
   <form>
-    <input type="radio" id="TEST" name="MODE" value="TEST" onchange="setFormAction()">
+    <input type="radio" id="TEST" checked="checked" name="MODE" value="TEST" onchange="setFormAction()">
     <label for="TEST">TEST</label>
     <input type="radio" id="LIVE" name="MODE" value="LIVE" onchange="setFormAction()">
     <label for="LIVE">LIVE</label>
@@ -159,13 +160,13 @@
       </tr>
       <tr>
         <td><label for="bname">bname</label></td>
-        <td><input type="hidden" name="bname" value="John Doe" id="bname" /></td>
+        <td><input type="hidden" name="bname" value="Truman Bradley" id="bname" /></td>
       </tr>
-      <!-- <tr> -->
-      <!--   <td><label for="parentUri">parentUri </label></td> -->
-      <!--   <td><input type="text" name="parentUri" value="https://preiter93.github.io/test-hosted-payment" -->
-      <!--       id="parentUri" /></td> -->
-      <!-- </tr> -->
+      <tr>
+        <td><label for="parentUri">parentUri </label></td>
+        <td><input type="text" name="parentUri" value="https://preiter93.github.io/test-hosted-payment"
+            id="parentUri" /></td>
+      </tr>
       <tr>
         <td><label for="customerid">customerid</label></td>
         <td><input type="text" name="customerid" value="123654785" id="customerid" /></td>
@@ -192,7 +193,8 @@
 
   </form>
 
-  <p><label for="sharedsecret">Shared secret</label><input type="text" name="sharedsecret" value="" id="sharedsecret" />
+  <p><label for="sharedsecret">Shared secret</label><input type="text" name="sharedsecret" value="sharedsecret"
+      id="sharedsecret" />
   </p>
 
   <!-- <iframe style="width:1000px;height:1000px;" name="paymentIframe"> -->
