@@ -113,7 +113,7 @@
         form.target = "paymentIframe";
         iframe.style.display = "block";
       } else {
-        form.target = "";
+        form.target = "_blank";
         iframe.style.display = "none";
       }
     }
@@ -136,7 +136,7 @@
     </label>
   </form>
 
-  <form id="mainform" method="post">
+  <form id="mainform" method="post" target="_blank">
     <table>
       <tr>
         <td><label for="txntype">Transaction type</label></td>
@@ -197,13 +197,13 @@
       </tr>
       <tr>
         <td><label for="responseFailURL">Response Fail URL</label></td>
-        <td><input size="50" type="text" name="responseFailURL"
-            value="https://test.ipg-online.com/webshop/response_failure.jsp" id="responseFailURL" /></td>
+        <td><input size="50" type="text" name="responseFailURL" value="http://localhost:3000/payment-failure"
+            id="responseFailURL" /></td>
       </tr>
       <tr>
         <td><label for="responseSuccessURL">Response Success URL</label></td>
-        <td><input size="50" type="text" name="responseSuccessURL"
-            value="https://test.ipg-online.com/webshop/response_success.jsp" id="responseSuccessURL" /></td>
+        <td><input size="50" type="text" name="responseSuccessURL" value="http://localhost:3000/payment-success"
+            id="responseSuccessURL" /></td>
       </tr>
       <tr>
         <td colspan="2"><input type="submit" value="SUBMIT"></td>
