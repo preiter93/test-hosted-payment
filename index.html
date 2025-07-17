@@ -97,11 +97,24 @@
       var form = document.getElementById("mainform");
       var selectedMode = document.querySelector('input[name="MODE"]:checked').value;
 
-      console.log(selectedMode)
       if (selectedMode === "TEST") {
         form.action = "https://test.ipg-online.com/connect/gateway/processing";
       } else if (selectedMode === "LIVE") {
         form.action = "https://www4.ipg-online.com/connect/gateway/processing";
+      }
+    }
+
+    function setFormTarget() {
+      var form = document.getElementById("mainform");
+      var iframe = document.getElementsByName("paymentIframe")[0];
+      var useIframe = document.getElementById("useIframe").checked;
+      console.log("use iframe" + useIframe)
+      if (useIframe) {
+        form.target = "paymentIframe";
+        iframe.style.display = "block";
+      } else {
+        form.target = "";
+        iframe.style.display = "none";
       }
     }
   </script>
@@ -114,6 +127,13 @@
     <label for="TEST">TEST</label>
     <input type="radio" id="LIVE" name="MODE" value="LIVE" onchange="setFormAction()">
     <label for="LIVE">LIVE</label>
+  </form>
+
+  <form>
+    <label>
+      <input type="checkbox" id="useIframe" onchange="setFormTarget()">
+      Use iframe for payment
+    </label>
   </form>
 
   <form id="mainform" method="post">
@@ -197,7 +217,8 @@
       id="sharedsecret" />
   </p>
 
-  <!-- <iframe style="width:1000px;height:1000px;" name="paymentIframe"> -->
+  <iframe style="width:1000px;height:1000px;display:none;" name="paymentIframe"></iframe>
+
 
   <!-- Google CryptoJS for HMAC -->
   <script LANGUAGE=JScript RUNAT=Server
