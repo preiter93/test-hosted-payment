@@ -1,7 +1,237 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>IPG Connect Sample for ASP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      color: #0056b3;
+      margin-top: 20px;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="text"],
+    input[type="submit"] {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #004494;
+    }
+
+    label {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      /* Update Transaction Date Time */
+      function updateDatetime() {
+        var timezone = $("input[name='timezone']").val();
+        console.log(timezone);
+        $("input[name='txndatetime']").val(moment().tz(timezone).format('YYYY:MM:DD-HH:mm:ss'));
+      }
+      $("input[name='timezone']").change(function () {
+        updateDatetime();
+      });
+      updateDatetime();
+    });
+
+    function setFormAction() {
+      var form = document.getElementById("mainform");
+      var selectedMode = document.querySelector('input[name="MODE"]:checked').value;
+
+      if (selectedMode === "TEST") {
+        form.action = "https://test.ipg-online.com/connect/gateway/processing";
+      } else if (selectedMode === "LIVE") {
+        form.action = "https://www4.ipg-online.com/connect/gateway/processing";
+      }
+    }
+  </script>
+</head>
 
 <body>
-  Hello world
+  <h2>Select the Type of Transaction</h2>
+  <form>
+    <input type="radio" id="TEST" name="MODE" value="TEST" onchange="setFormAction()">
+    <label for="TEST">TEST</label>
+    <input type="radio" id="LIVE" name="MODE" value="LIVE" onchange="setFormAction()">
+    <label for="LIVE">LIVE</label>
+  </form>
+
+  <form id="mainform" target="paymentIframe" method="post">
+    <table>
+      <tr>
+        <td><label for="txntype">Transaction type</label></td>
+        <td><input type="text" name="txntype" value="payer_auth" id="txntype" /></td>
+      </tr>
+      <tr>
+        <td><label for="timezone">Timezone</label></td>
+        <td><input type="text" name="timezone" value="Europe/Berlin" id="timezone" /></td>
+      </tr>
+      <tr>
+        <td><label for="checkoutoption">Checkout option</label></td>
+        <td><input type="text" name="checkoutoption" value="combinedpage" id="checkoutoption" /></td>
+      </tr>
+      <tr>
+        <td><label for="txndatetime">Transaction datetime</label></td>
+        <td><input type="text" name="txndatetime" id="txndatetime" /></td>
+      </tr>
+      <tr>
+        <td><label for="hash_algorithm">Hash algorithm</label></td>
+        <td><input type="text" name="hash_algorithm" value="HMACSHA256" id="hash_algorithm" /></td>
+      </tr>
+      <tr>
+        <td><label for="hashExtended">Hash Extended</label></td>
+        <td><input type="text" name="hashExtended" id="hashExtended" /></td>
+      </tr>
+      <tr>
+        <td><label for="storename">Store name</label></td>
+        <td><input type="text" name="storename" value="" id="storename" /></td>
+      </tr>
+      <tr>
+        <td><label for="chargetotal">Charge total</label></td>
+        <td><input type="text" name="chargetotal" value="1" id="chargetotal" /></td>
+      </tr>
+      <tr>
+        <td><label for="currency">Currency</label></td>
+        <td><input type="text" name="currency" value="410" id="currency" /></td>
+      </tr>
+      <tr>
+        <td><label for="language">Language</label></td>
+        <td><input type="text" name="language" value="en_US" id="language" /></td>
+      </tr>
+      <tr>
+        <td><label for="bname">bname</label></td>
+        <td><input type="hidden" name="bname" value="John Doe" id="bname" /></td>
+      </tr>
+      <tr>
+        <td><label for="parentUri">parentUri </label></td>
+        <td><input type="text" name="parentUri" value="https://preiter93.github.io/test-hosted-payment"
+            id="parentUri" /></td>
+      </tr>
+      <tr>
+        <td><label for="customerid">customerid</label></td>
+        <td><input type="text" name="customerid" value="123654785" id="customerid" /></td>
+      </tr>
+      <tr>
+        <td><label for="oid">Order ID</label></td>
+        <td><input type="text" name="oid" value="oid-123" id="oid" /></td>
+      </tr>
+      <tr>
+        <td><label for="responseFailURL">Response Fail URL</label></td>
+        <td><input size="50" type="text" name="responseFailURL"
+            value="https://test.ipg-online.com/webshop/response_failure.jsp" id="responseFailURL" /></td>
+      </tr>
+      <tr>
+        <td><label for="responseSuccessURL">Response Success URL</label></td>
+        <td><input size="50" type="text" name="responseSuccessURL"
+            value="https://test.ipg-online.com/webshop/response_success.jsp" id="responseSuccessURL" /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input type="submit" value="SUBMIT"></td>
+      </tr>
+    </table>
+
+
+  </form>
+
+  <p><label for="sharedsecret">Shared secret</label><input type="text" name="sharedsecret" value="" id="sharedsecret" />
+  </p>
+
+  <iframe style="width:1000px;height:1000px;" name="paymentIframe">
+
+    <!-- Google CryptoJS for HMAC -->
+    <script LANGUAGE=JScript RUNAT=Server
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+      $("#mainform").submit(function (e) {
+        // e.preventDefault();
+        const checkoutoption = document.getElementById('checkoutoption').value;
+        const bname = document.getElementById('bname').value;
+        const parentUri = document.getElementById('parentUri').value;
+        const customerid = document.getElementById('customerid').value;
+        const txntype = document.getElementById("txntype").value;
+        const timezone = document.getElementById("timezone").value;
+        const txndatetime = document.getElementById("txndatetime").value;
+        const hash_algorithm = document.getElementById("hash_algorithm").value;
+        const storename = document.getElementById("storename").value;
+        const chargetotal = document.getElementById("chargetotal").value;
+        const currency = document.getElementById("currency").value;
+        const language = document.getElementById("language").value;
+        const oid = document.getElementById('oid').value;
+        const responseFailURL = document.getElementById('responseFailURL').value;
+        const responseSuccessURL = document.getElementById('responseSuccessURL').value;
+        const separator = "|";
+        const sharedSecret = document.getElementById("sharedsecret").value;
+
+        var stringToExtendedHash = bname + separator + chargetotal + separator + checkoutoption + separator + currency + separator + customerid + separator + hash_algorithm + separator + language + separator + oid + separator + parentUri + separator + responseFailURL + separator + responseSuccessURL + separator + storename + separator + timezone + separator + txndatetime + separator + txntype;
+
+        var hashHMACSHA256 = CryptoJS.HmacSHA256(stringToExtendedHash, sharedSecret);
+        var extendedhash = CryptoJS.enc.Base64.stringify(hashHMACSHA256);
+
+        document.getElementById("hashExtended").value = extendedhash;
+        document.getElementById("responseFailURL").value = responseFailURL;
+        document.getElementById("responseSuccessURL").value = responseSuccessURL;
+      });
+    </script>
 </body>
 
 </html>
